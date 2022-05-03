@@ -9,65 +9,144 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
-	
-	<meta name="viewport"
+<meta charset="UTF-8" />
+<meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="" />
-	<meta name="author" content="" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>Shop Homepage - Start Bootstrap Template</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="resources/assets/favicon.ico" />
+<!-- Bootstrap icons-->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+	rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="resources/css/styles.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	
-	<!-- Favicon-->
-	<link rel="icon" type="image/x-icon" href="resources/assets/favicon.ico" />
-	
-	<!-- Bootstrap icons-->
-	<link
-		href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
-		rel="stylesheet" />
-	
-	<!-- Core theme CSS (includes Bootstrap)-->
-	<link href="resources/css/styles.css" rel="stylesheet" />
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	
-	<!--   jQuery , Bootstrap CDN  -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-	
-	<!--  CSS 추가 : 툴바에 화면 가리는 현상 해결 :  주석처리 전, 후 확인-->
-	<style>
-        body {
-            padding-top : 50px;
-        }
-        
-      
-		.dropdown-toggle{
-			float:left;
-		}
-
-
-   	</style>
-   	
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
-	 	
+     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+     <script type="text/javascript">
 	
+		//============= logout Event  처리 =============	
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('로그아웃')").on("click" , function() {
+				$(self.location).attr("href","/user/logout");
+				//self.location = "/user/logout"
+			}); 
+		 });
+		
+		
+		//============= History Event  처리 =============	
+			
+		function history(){
+			popWin = window.open("/history.jsp",
+								"popWin",
+								"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		}
+			
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('최근본상품')").on("click" , function() {
+		 		history();
+			}); 
+		 });
+		
+		//============= 회원정보조회 Event  처리 =============	
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("#adUserInfo").on("click" , function() {
+				//$(self.location).attr("href","/user/logout");
+				self.location = "/user/listUser"
+			}); 
+		 });
+		
+		//=============  개인정보조회 Event  처리 =============
+		 $(function() {
+	 		$( "#userInfo" ).on("click" , function() {
+	 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
+			});
+		 });
+		
+		//=============  상품구매 Event  처리 =============
+		 $(function() {
+	 		$( "a:contains('상품구매')" ).on("click" , function() {
+	 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				$(self.location).attr("href","/product/listProduct?manu='search'");
+			});
+		 });
+		
+	</script>  
 	
 </head>
 	
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-
+	<!-- Navigation-->
+	<!-- 사용자가 user 일때 -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container px-4 px-lg-5">
+			<a class="navbar-brand" href="#!">Bubble Bubble</a> 
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+				
+					<li class="nav-item"><a id="userInfo" class="nav-link active"
+						aria-current="page" href="#">개인정보조회</a></li>
+						
+					 <c:if test="${sessionScope.user.role == 'admin'}">
+					<li class="nav-item"><a class="nav-link" id="adUserInfo" href="#">회원정보조회</a></li>
+					</c:if>
+					
+					
+					<!-- 판매관리 -->
+					<c:if test="${sessionScope.user.role == 'admin'}">
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">판매상품관리</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="#!">판매상품등록</a></li>
+							<li><hr class="dropdown-divider" /></li>
+							<li><a class="dropdown-item" href="#!">판매상품관리</a></li>
+						</ul></li>
+					</c:if>
+					
+					<!-- 구매관리 -->
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+						role="button" data-bs-toggle="dropdown" aria-expanded="false">구매관리</a>
+						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<li><a class="dropdown-item" href="#!">상품구매</a></li>
+							<li><hr class="dropdown-divider" /></li>
+							<li><a class="dropdown-item" href="#!">상품검색</a></li>
+							<c:if test="${sessionScope.user.role == 'user'}">
+							<li><a class="dropdown-item" href="#!">구매이력</a></li>
+							</c:if>
+						</ul>
+					</li>
+						
+					<li class="nav-item"><a class="nav-link" href="#">최근본상품</a></li>
+					
+					<li class="nav-item"><a class="nav-link" href="#">로그아웃</a></li>
+				</ul>
+				<form class="d-flex">
+					<button class="btn btn-outline-dark" type="submit">
+						<i class="bi-cart-fill me-1"></i> Cart <span
+							class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+					</button>
+				</form>
+			</div>
+		</div>
+	</nav>
 	<!-- Header-->
 	<header class="bg-white py-5">
 		<div class="container px-4 px-lg-5 my-5" style="text-align : center;">
@@ -319,8 +398,7 @@
 	<!-- Footer-->
 	<footer class="py-5 bg-dark">
 		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Your
-				Website 2022</p>
+			<p class="m-0 text-center text-white">Copyright &copy; Bubble Bubble 2022</p>
 		</div>
 	</footer>
 	<!-- Bootstrap core JS-->
