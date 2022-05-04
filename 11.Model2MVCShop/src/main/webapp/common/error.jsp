@@ -13,6 +13,11 @@
 		<%=  request.getRequestURI() %>
 		<br/>
 		<%=  request.getRequestURL() %>
+		<br/>
+		
+		<div style = "text-align:center";>
+			<img src="../images/uploadFiles/공사중표지판.PNG"/>
+		</div>
 	
 	</body>
 </html>
